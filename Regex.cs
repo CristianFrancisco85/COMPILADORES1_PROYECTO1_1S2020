@@ -134,6 +134,7 @@ namespace OLC1_Proyecto1
             Console.Write("SALIO CON SIZE DE ");
             Console.WriteLine(TempNodos.Count);
             RegexAFN = TempNodos.ElementAt(0).getAFN();
+            Estado.Contador = 0;
         }
 
         public int existeEstado(Estado TempEstado)
