@@ -412,6 +412,7 @@ namespace OLC1_Proyecto1
             foreach (Regex TempRegex in Expresiones)
             {
                 TempRegex.createRegexAFN();
+                TempRegex.graphAFN();
             }
             Console.WriteLine("dsad");
         }

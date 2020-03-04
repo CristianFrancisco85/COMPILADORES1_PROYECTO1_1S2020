@@ -37,7 +37,7 @@ namespace OLC1_Proyecto1
             return this.EstadoFinal;
         }
 
-        public void createBasicAFN(int arg1)
+        public void createBasicAFN(int arg1, LinkedList<Estado> Estados)
         {
             Transicion TempTransicion = new Transicion();
             EstadoInicial.setID(Estado.Contador++);
@@ -45,9 +45,11 @@ namespace OLC1_Proyecto1
             TempTransicion.setIDTerminal(arg1);
             TempTransicion.setDestino(EstadoFinal);
             EstadoInicial.addTransicion(TempTransicion);
+            Estados.AddLast(EstadoInicial);
+            Estados.AddLast(EstadoFinal);
         }
 
-        public void createConcatenacionAFN(AFN AFN1, AFN AFN2)
+        public void createConcatenacionAFN(AFN AFN1, AFN AFN2, LinkedList<Estado> Estados)
         {
             EstadoInicial = AFN1.getEstadoInicial();
             EstadoFinal = AFN2.getEstadoFinal();
@@ -55,21 +57,39 @@ namespace OLC1_Proyecto1
             //SE COMBINAN ESTADO FINAL DE AFN1 CON ESTADO INICIAL DE AFN2   
             Estado TempEstado = new Estado();
             TempEstado.setID(Nodo.Contador++);
+            //TRANSICIONES ENTRANTES
+            foreach (Estado AuxEstado in Estados)
+            {
+                foreach (Transicion TempTransicion in AuxEstado.getTransiciones())
+                {
+                    if (TempTransicion.getDestino() == AFN1.getEstadoFinal() || TempTransicion.getDestino() == AFN2.getEstadoInicial() )
+                    {
+                        TempTransicion.setDestino(TempEstado);
+
+                    }
+                }
+            }
+            //TRANSICIONES SALIENTES
             foreach (Transicion TempTransicion in AFN1.getEstadoFinal().getTransiciones())
             {
-                TempEstado.addTransicion(TempTransicion);
+                TempEstado.addTransicion((Transicion)TempTransicion.Clone());
             }
             foreach (Transicion TempTransicion in AFN2.getEstadoInicial().getTransiciones())
             {
-                TempEstado.addTransicion(TempTransicion);
+                TempEstado.addTransicion((Transicion)TempTransicion.Clone());
             }
+
+            //SE AÑADE NUEVO ESTADO Y SE ELIMINAN LOS DOS USADOS PARA EL NUEVO ESTADO   
+            Estados.Remove(AFN1.getEstadoFinal());
+            Estados.Remove(AFN2.getEstadoInicial());
+            Estados.AddLast(TempEstado);
             AFN1.setEstadoFinal(TempEstado);
             AFN2.setEstadoInicial(TempEstado);
-
         }
 
-        public void createKleeneAFN(AFN AFN1)
+        public void createKleeneAFN(AFN AFN1, LinkedList<Estado> Estados)
         {
+
             Transicion TempTransicion;
             EstadoInicial.setID(Estado.Contador++);
             EstadoFinal.setID(Estado.Contador++);
@@ -93,9 +113,14 @@ namespace OLC1_Proyecto1
             TempTransicion.setIDTerminal(-1);
             TempTransicion.setDestino(EstadoFinal);
             AFN1.getEstadoFinal().addTransicion(TempTransicion);
+            //SE AGREGAN ESTADOS NUEVOS
+            Estados.AddLast(EstadoInicial);
+            Estados.AddLast(EstadoFinal);
         }
-        public void createAlternanciaAFN(AFN AFN1, AFN AFN2)
+
+        public void createAlternanciaAFN(AFN AFN1, AFN AFN2, LinkedList<Estado> Estados)
         {
+
             Transicion TempTransicion;
             EstadoInicial.setID(Estado.Contador++);
             EstadoFinal.setID(Estado.Contador++);
@@ -119,7 +144,61 @@ namespace OLC1_Proyecto1
             TempTransicion.setIDTerminal(-1);
             TempTransicion.setDestino(EstadoFinal);
             AFN2.getEstadoFinal().addTransicion(TempTransicion);
+            //SE AGREGAN ESTADOS NUEVOS
+            Estados.AddLast(EstadoInicial);
+            Estados.AddLast(EstadoFinal);
         }
 
+        public void createPositivaAFN(AFN AFN1, LinkedList<Estado> Estados)
+        {
+
+            Transicion TempTransicion;
+            EstadoInicial.setID(Estado.Contador++);
+            EstadoFinal.setID(Estado.Contador++);
+            //TRANSICION CON EPSILON DESDE ESTADO INICIAL HACIA ESTADO INICIAL DE AFN1 
+            TempTransicion = new Transicion();
+            TempTransicion.setIDTerminal(-1);
+            TempTransicion.setDestino(AFN1.getEstadoInicial());
+            EstadoInicial.addTransicion(TempTransicion);
+            //TRANSICION CON EPSILON DESDE ESTADO FINAL DE AFN1 HACIA ESTADO INICIAL DE AFN1
+            TempTransicion = new Transicion();
+            TempTransicion.setIDTerminal(-1);
+            TempTransicion.setDestino(AFN1.getEstadoInicial());
+            AFN1.getEstadoFinal().addTransicion(TempTransicion);
+            //TRANSICION CON EPSILON DESDE ESTADO FINAL DE AFN1 HACIA ESTADO FINAL
+            TempTransicion = new Transicion();
+            TempTransicion.setIDTerminal(-1);
+            TempTransicion.setDestino(EstadoFinal);
+            AFN1.getEstadoFinal().addTransicion(TempTransicion);
+            //SE AGREGAN ESTADOS NUEVOS
+            Estados.AddLast(EstadoInicial);
+            Estados.AddLast(EstadoFinal);
+        }
+
+        public void createUnaOCeroAFN (AFN AFN1, LinkedList<Estado> Estados)
+        {
+
+            Transicion TempTransicion;
+            EstadoInicial.setID(Estado.Contador++);
+            EstadoFinal.setID(Estado.Contador++);
+            //TRANSICION CON EPSILON DESDE ESTADO INICIAL HACIA ESTADO FINAL
+            TempTransicion = new Transicion();
+            TempTransicion.setIDTerminal(-1);
+            TempTransicion.setDestino(EstadoFinal);
+            EstadoInicial.addTransicion(TempTransicion);
+            //TRANSICION CON EPSILON DESDE ESTADO INICIAL HACIA ESTADO INICIAL DE AFN1 
+            TempTransicion = new Transicion();
+            TempTransicion.setIDTerminal(-1);
+            TempTransicion.setDestino(AFN1.getEstadoInicial());
+            EstadoInicial.addTransicion(TempTransicion);
+            //TRANSICION CON EPSILON DESDE ESTADO FINAL DE AFN1 HACIA ESTADO FINAL
+            TempTransicion = new Transicion();
+            TempTransicion.setIDTerminal(-1);
+            TempTransicion.setDestino(EstadoFinal);
+            AFN1.getEstadoFinal().addTransicion(TempTransicion);
+            //SE AGREGAN ESTADOS NUEVOS
+            Estados.AddLast(EstadoInicial);
+            Estados.AddLast(EstadoFinal);
+        }
     }
 }

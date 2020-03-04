@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OLC1_Proyecto1
 {
-    public class Transicion
+    public class Transicion : ICloneable
     {
         private int IDTerminal;
         private Estado Destino;
@@ -43,6 +43,11 @@ namespace OLC1_Proyecto1
         public int getIDTerminal()
         {
             return this.IDTerminal;
+        }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }

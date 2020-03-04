@@ -61,6 +61,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Regex.cs" />
     <Compile Include="Scanner.cs" />
+    <Compile Include="TextEditorTabPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextEditorTabPage.designer.cs">
+      <DependentUpon>TextEditorTabPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Token.cs" />
     <Compile Include="Transicion.cs" />
     <EmbeddedResource Include="MenuPrincipal.resx">
@@ -75,6 +81,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TextEditorTabPage.resx">
+      <DependentUpon>TextEditorTabPage.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

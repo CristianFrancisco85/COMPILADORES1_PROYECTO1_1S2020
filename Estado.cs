@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OLC1_Proyecto1
 {
-    public class Estado
+    public class Estado : ICloneable
     {
         private int ID;
         private LinkedList<int> TerminalesID;
@@ -199,6 +199,11 @@ namespace OLC1_Proyecto1
                 }
             }
             return null;
+        }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }
