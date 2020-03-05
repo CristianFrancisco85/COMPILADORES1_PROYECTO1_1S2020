@@ -9,6 +9,7 @@ namespace OLC1_Proyecto1
     public class Transicion : ICloneable
     {
         private int IDTerminal;
+        private String TerminalAFD;
         private Estado Destino;
 
         public Transicion()
@@ -43,6 +44,16 @@ namespace OLC1_Proyecto1
         public int getIDTerminal()
         {
             return this.IDTerminal;
+        }
+
+        public void setTerminalAFD(String arg1)
+        {
+            this.TerminalAFD = arg1;
+        }
+
+        public String getTerminalAFD()
+        {
+            return this.TerminalAFD;
         }
 
         public object Clone()

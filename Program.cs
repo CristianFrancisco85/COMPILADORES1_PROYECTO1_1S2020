@@ -8,9 +8,13 @@ namespace OLC1_Proyecto1
 {
     static class Program
     {
+        public static LinkedList<String> RutasAFN = new LinkedList<String>();
+        public static LinkedList<String> RutasAFD = new LinkedList<String>();
         /// <summary>
         /// Punto de entrada principal para la aplicación.
         /// </summary>
+        /// 
+
         [STAThread]
         static void Main()
         {

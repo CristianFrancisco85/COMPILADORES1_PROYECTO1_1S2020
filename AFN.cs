@@ -56,7 +56,7 @@ namespace OLC1_Proyecto1
 
             //SE COMBINAN ESTADO FINAL DE AFN1 CON ESTADO INICIAL DE AFN2   
             Estado TempEstado = new Estado();
-            TempEstado.setID(Nodo.Contador++);
+            TempEstado.setID(Estado.Contador++);
             //TRANSICIONES ENTRANTES
             foreach (Estado AuxEstado in Estados)
             {

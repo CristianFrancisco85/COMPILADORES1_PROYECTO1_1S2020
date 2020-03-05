@@ -413,6 +413,7 @@ namespace OLC1_Proyecto1
             {
                 TempRegex.createRegexAFN();
                 TempRegex.graphAFN();
+                TempRegex.graphAFD();
             }
             Console.WriteLine("dsad");
         }

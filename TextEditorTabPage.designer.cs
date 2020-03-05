@@ -71,7 +71,7 @@
             this.Controls.Add(this.numLineas);
             this.Controls.Add(this.TxtCodigo);
             this.Name = "TextEditorTabPage";
-            this.Size = new System.Drawing.Size(466, 575);
+            this.Size = new System.Drawing.Size(605, 575);
             this.Load += new System.EventHandler(this.TextEditorTabPage_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numLineas)).EndInit();
             this.ResumeLayout(false);

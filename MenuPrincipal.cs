@@ -13,7 +13,9 @@ namespace OLC1_Proyecto1
 {
     public partial class MenuPrincipal : Form
     {
-        Scanner MainScanner = new Scanner();
+        Scanner MainScanner;
+        
+
         public MenuPrincipal()
         {
             InitializeComponent();
@@ -21,9 +23,11 @@ namespace OLC1_Proyecto1
 
         private void Button1_Click(object sender, EventArgs e)
         {
+            MainScanner = new Scanner();
             MainScanner.ScanText(ActualTxtCodigo);
             MainScanner.analizeTokens();
             MainScanner.analizeExpresiones();
+            automataPictureBox.Image = Image.FromFile(Program.RutasAFD.ElementAt(0));
         }
 
         private void Button3_Click(object sender, EventArgs e)

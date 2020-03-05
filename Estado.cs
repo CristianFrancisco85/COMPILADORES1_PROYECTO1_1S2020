@@ -12,6 +12,7 @@ namespace OLC1_Proyecto1
         private LinkedList<int> TerminalesID;
         private Boolean EstadoAceptacion;
         private LinkedList<Transicion> ListaTransiciones;
+        private LinkedList<Estado> ListaEstados;
 
         public static int Contador = 0;
 
@@ -19,6 +20,7 @@ namespace OLC1_Proyecto1
         {
             TerminalesID = new LinkedList<int>();
             ListaTransiciones = new LinkedList<Transicion>();
+            ListaEstados = new LinkedList<Estado>();
             EstadoAceptacion = false;
         }
 
@@ -71,6 +73,38 @@ namespace OLC1_Proyecto1
         {
             return this.ListaTransiciones;
         }
+
+        public void addEstadoAFN(Estado arg1)
+        {
+            this.ListaEstados.AddLast(arg1);
+        }
+
+        public LinkedList<Estado> getEstadosAFN()
+        {
+            return this.ListaEstados;
+        }
+
+        public Boolean compareEstadosAFN(Estado arg1)
+        {
+
+            if (this.getEstadosAFN().Count == arg1.getEstadosAFN().Count)
+            {
+                LinkedList<Estado> TempEstados = this.getEstadosAFN();
+                foreach (Estado AuxEstado in TempEstados)
+                {
+                    if (!arg1.getEstadosAFN().Contains(AuxEstado))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         public LinkedList<int> getTerminales()
         {
