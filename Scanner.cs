@@ -14,7 +14,7 @@ namespace OLC1_Proyecto1
         LinkedList<Token> ListaErrores = new LinkedList<Token>();
         LinkedList<Conjunto> Conjuntos = new LinkedList<Conjunto>();
         LinkedList<Palabra> Palabras = new LinkedList<Palabra>();
-        LinkedList<Regex> Expresiones = new LinkedList<Regex>();
+        public LinkedList<Regex> Expresiones = new LinkedList<Regex>();
         int TokenID = 0; //Para Simbolos
         int ErrorID = 0; //Para Errores
 

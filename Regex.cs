@@ -13,9 +13,9 @@ namespace OLC1_Proyecto1
     {
         private String ID;
         private LinkedList<Nodo> Nodos = new LinkedList<Nodo>();
-        private LinkedList<Estado> EstadosAFN = new LinkedList<Estado>();       
+        public LinkedList<Estado> EstadosAFN = new LinkedList<Estado>();       
         AFN RegexAFN;
-        private LinkedList<Estado> EstadosAFD = new LinkedList<Estado>();
+        public LinkedList<Estado> EstadosAFD = new LinkedList<Estado>();
         
 
         public void setID(String arg1)
@@ -156,15 +156,15 @@ namespace OLC1_Proyecto1
             {
                 FileStream MyStream = new FileStream(saveFile.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
                 StreamWriter MyWriter = new StreamWriter(MyStream);
-                MyWriter.WriteLine("digraph G {\n nodesep=0.3;\n ranksep=0.2;\n    margin=0.1;\n   node [shape=circle];\n  edge [arrowsize=0.8];");
-                MyWriter.WriteLine("rankdir = LR;");
+                MyWriter.WriteLine("digraph G {\n nodesep=0.3;\n ranksep=0.2;\n    margin=0.1;\n   node [shape=circle];\n  edge [arrowsize=0.8];\n");
+                MyWriter.WriteLine("rankdir = LR;\n");
                 
                 foreach (Estado TempEstado in EstadosAFN)
                 {
                     foreach (Transicion TempTransicion in TempEstado.getTransiciones())
                     {
                         //FORMA a -> b [label="TerminalString"];
-                        MyWriter.WriteLine(TempEstado.getID()+"->"+ TempTransicion.getDestino().getID() + " [label=\"" + getTerminalString(TempTransicion.getIDTerminal()) + "\"];");
+                        MyWriter.WriteLine(TempEstado.getID()+"->"+ TempTransicion.getDestino().getID() + " [label=\"" + getTerminalString(TempTransicion.getIDTerminal()) + "\"];\n");
                     }
                 }
                 MyWriter.WriteLine("}");
@@ -255,7 +255,7 @@ namespace OLC1_Proyecto1
                     if ( getTerminalString(TempTransicion.getIDTerminal()).Equals(Terminal) && !EstadosRecorridos.Contains(TempTransicion.getDestino()))
                     {
                         EstadosRecorridos.AddLast(TempTransicion.getDestino());
-                        mover(EstadosRecorridos, Terminal, EstadosRecorridos);
+                   
                     }
                 }
                 SizeT = T.Count();
@@ -270,6 +270,14 @@ namespace OLC1_Proyecto1
             LinkedList<Estado> AuxList;
             cerradura(RegexAFN.getEstadoInicial(), NewEstadoAFD.getEstadosAFN());
             NewEstadoAFD.setID(Estado.Contador++);
+            foreach (Estado AuxEstado in NewEstadoAFD.getEstadosAFN())
+            {
+                if (AuxEstado == RegexAFN.getEstadoFinal())
+                {
+                    NewEstadoAFD.setAceptacion();
+                    break;
+                }
+            }
             EstadosAFD.AddLast(NewEstadoAFD);
 
             //SE OBTIENE ALFABETO DE EXPRESION REGULAR
@@ -320,10 +328,18 @@ namespace OLC1_Proyecto1
                         }
                     }
 
-                    //SI EL ESTADO NO EXISTE SE AGREGA A LA LISTA Y SE ESTABLECE DESTINO PARA LA TRANSICION
+                    //SI EL ESTADO NO EXISTE SE AGREGA A LA LISTA DE ESTADOS Y SE ESTABLECE DESTINO PARA LA TRANSICION
                     if (!ControlNuevoEstado)
                     {
                         NewEstadoAFD.setID(Estado.Contador++);
+                        foreach (Estado AuxEstado in NewEstadoAFD.getEstadosAFN())
+                        {
+                            if (AuxEstado==RegexAFN.getEstadoFinal())
+                            {
+                                NewEstadoAFD.setAceptacion();
+                                break;
+                            }
+                        }
                         EstadosAFD.AddLast(NewEstadoAFD);
                         TempTransicion.setDestino(NewEstadoAFD);
                         //SE AGREGA LA TRANSICION A TEMPESTADO
@@ -350,15 +366,19 @@ namespace OLC1_Proyecto1
             {
                 FileStream MyStream = new FileStream(saveFile.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
                 StreamWriter MyWriter = new StreamWriter(MyStream);
-                MyWriter.WriteLine("digraph G {\n nodesep=0.3;\n ranksep=0.2;\n    margin=0.1;\n   node [shape=circle];\n  edge [arrowsize=0.8];");
-                MyWriter.WriteLine("rankdir = LR;");
+                MyWriter.WriteLine("digraph G {\n nodesep=0.3;\n ranksep=0.2;\n    margin=0.1;\n   node [shape=circle];\n  edge [arrowsize=0.8];\n");
+                MyWriter.WriteLine("rankdir = LR;\n");
 
                 foreach (Estado TempEstado in EstadosAFD)
                 {
+                    if (TempEstado.getAceptacion())
+                    {
+                        MyWriter.WriteLine(TempEstado.getID() + "[shape=doublecircle];\n");
+                    }
                     foreach (Transicion TempTransicion in TempEstado.getTransiciones())
                     {
                         //FORMA a -> b [label="TerminalString"];
-                        MyWriter.WriteLine(TempEstado.getID() + "->" + TempTransicion.getDestino().getID() + " [label=\"" + TempTransicion.getTerminalAFD() + "\"];");
+                        MyWriter.WriteLine(TempEstado.getID() + "->" + TempTransicion.getDestino().getID() + " [label=\"" + TempTransicion.getTerminalAFD() + "\"];\n");
                     }
                 }
                 MyWriter.WriteLine("}");

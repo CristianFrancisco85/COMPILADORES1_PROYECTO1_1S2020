@@ -33,12 +33,17 @@
             this.button2 = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.textEditorTabPage1 = new Practica1LF_AnalizadorLexico.TextEditorTabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.automataPictureBox = new System.Windows.Forms.PictureBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.EstadoColumna = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.anteriorBtn = new System.Windows.Forms.Button();
+            this.siguienteBtn = new System.Windows.Forms.Button();
+            this.textEditorTabPage1 = new Practica1LF_AnalizadorLexico.TextEditorTabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.automataPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -46,7 +51,7 @@
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(1162, 832);
+            this.label2.Location = new System.Drawing.Point(1394, 807);
             this.label2.Margin = new System.Windows.Forms.Padding(1);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(291, 16);
@@ -69,7 +74,7 @@
             // 
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.button2.Location = new System.Drawing.Point(454, 726);
+            this.button2.Location = new System.Drawing.Point(451, 726);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(205, 58);
             this.button2.TabIndex = 4;
@@ -97,15 +102,6 @@
             this.tabPage1.Text = "Pestaña1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // textEditorTabPage1
-            // 
-            this.textEditorTabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.textEditorTabPage1.Location = new System.Drawing.Point(0, 0);
-            this.textEditorTabPage1.Margin = new System.Windows.Forms.Padding(5);
-            this.textEditorTabPage1.Name = "textEditorTabPage1";
-            this.textEditorTabPage1.Size = new System.Drawing.Size(605, 575);
-            this.textEditorTabPage1.TabIndex = 0;
-            // 
             // button3
             // 
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -120,19 +116,70 @@
             // 
             // automataPictureBox
             // 
-            this.automataPictureBox.Location = new System.Drawing.Point(726, 40);
+            this.automataPictureBox.Location = new System.Drawing.Point(713, 120);
             this.automataPictureBox.Name = "automataPictureBox";
-            this.automataPictureBox.Size = new System.Drawing.Size(700, 335);
-            this.automataPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.automataPictureBox.Size = new System.Drawing.Size(557, 264);
+            this.automataPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.automataPictureBox.TabIndex = 7;
             this.automataPictureBox.TabStop = false;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.EstadoColumna});
+            this.dataGridView1.Location = new System.Drawing.Point(717, 457);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(553, 241);
+            this.dataGridView1.TabIndex = 8;
+            // 
+            // EstadoColumna
+            // 
+            this.EstadoColumna.HeaderText = "Estado";
+            this.EstadoColumna.Name = "EstadoColumna";
+            // 
+            // anteriorBtn
+            // 
+            this.anteriorBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.anteriorBtn.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.anteriorBtn.Location = new System.Drawing.Point(713, 33);
+            this.anteriorBtn.Name = "anteriorBtn";
+            this.anteriorBtn.Size = new System.Drawing.Size(171, 40);
+            this.anteriorBtn.TabIndex = 9;
+            this.anteriorBtn.Text = "AF Anterior";
+            this.anteriorBtn.UseVisualStyleBackColor = true;
+            this.anteriorBtn.Click += new System.EventHandler(this.AnteriorBtn_Click);
+            // 
+            // siguienteBtn
+            // 
+            this.siguienteBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.siguienteBtn.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.siguienteBtn.Location = new System.Drawing.Point(1099, 33);
+            this.siguienteBtn.Name = "siguienteBtn";
+            this.siguienteBtn.Size = new System.Drawing.Size(171, 40);
+            this.siguienteBtn.TabIndex = 10;
+            this.siguienteBtn.Text = "AF Siguiente";
+            this.siguienteBtn.UseVisualStyleBackColor = true;
+            this.siguienteBtn.Click += new System.EventHandler(this.SiguienteBtn_Click);
+            // 
+            // textEditorTabPage1
+            // 
+            this.textEditorTabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.textEditorTabPage1.Location = new System.Drawing.Point(0, 0);
+            this.textEditorTabPage1.Margin = new System.Windows.Forms.Padding(5);
+            this.textEditorTabPage1.Name = "textEditorTabPage1";
+            this.textEditorTabPage1.Size = new System.Drawing.Size(605, 575);
+            this.textEditorTabPage1.TabIndex = 0;
             // 
             // MenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.ClientSize = new System.Drawing.Size(1452, 846);
+            this.ClientSize = new System.Drawing.Size(1684, 821);
+            this.Controls.Add(this.siguienteBtn);
+            this.Controls.Add(this.anteriorBtn);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.automataPictureBox);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.tabControl1);
@@ -148,6 +195,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.automataPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -162,6 +210,10 @@
         private System.Windows.Forms.TabPage tabPage1;
         private Practica1LF_AnalizadorLexico.TextEditorTabPage textEditorTabPage1;
         private System.Windows.Forms.PictureBox automataPictureBox;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EstadoColumna;
+        private System.Windows.Forms.Button anteriorBtn;
+        private System.Windows.Forms.Button siguienteBtn;
     }
 }
 

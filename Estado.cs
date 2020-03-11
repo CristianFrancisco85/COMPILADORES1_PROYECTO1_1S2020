@@ -105,7 +105,6 @@ namespace OLC1_Proyecto1
             }
         }
 
-
         public LinkedList<int> getTerminales()
         {
             return this.TerminalesID;

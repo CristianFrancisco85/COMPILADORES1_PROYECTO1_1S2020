@@ -14,7 +14,8 @@ namespace OLC1_Proyecto1
     public partial class MenuPrincipal : Form
     {
         Scanner MainScanner;
-        
+        int NumImagen;
+        int ApuntadorImagen;
 
         public MenuPrincipal()
         {
@@ -27,7 +28,10 @@ namespace OLC1_Proyecto1
             MainScanner.ScanText(ActualTxtCodigo);
             MainScanner.analizeTokens();
             MainScanner.analizeExpresiones();
-            automataPictureBox.Image = Image.FromFile(Program.RutasAFD.ElementAt(0));
+            NumImagen = Program.RutasAFN.Count;
+            NumImagen = NumImagen + Program.RutasAFD.Count;
+            ApuntadorImagen = 0;
+            automataPictureBox.Image = Image.FromFile(Program.RutasAFN.ElementAt(0));
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -60,5 +64,41 @@ namespace OLC1_Proyecto1
             }
         }
 
+        private void AnteriorBtn_Click(object sender, EventArgs e)
+        {
+            if (ApuntadorImagen > 0)
+            {
+                ApuntadorImagen--;
+                if (ApuntadorImagen == 0 || ApuntadorImagen < Program.RutasAFN.Count)
+                {
+                    automataPictureBox.Image = Image.FromFile(Program.RutasAFN.ElementAt(ApuntadorImagen));
+                }
+                else
+                {
+                    automataPictureBox.Image = Image.FromFile(Program.RutasAFD.ElementAt(ApuntadorImagen - Program.RutasAFN.Count));
+                }
+            }
+        }
+
+        private void SiguienteBtn_Click(object sender, EventArgs e)
+        {
+            if (ApuntadorImagen < NumImagen-1)
+            {
+                ApuntadorImagen++;
+                if (ApuntadorImagen < Program.RutasAFN.Count)
+                {
+                    automataPictureBox.Image = Image.FromFile(Program.RutasAFN.ElementAt(ApuntadorImagen));
+                }
+                else
+                {
+                    automataPictureBox.Image = Image.FromFile(Program.RutasAFD.ElementAt(ApuntadorImagen - Program.RutasAFN.Count));
+                }
+            }
+        }
+
+        private void ActulizarTablaTransiciones(int Apuntador,bool Fuente)
+        {
+
+        }
     }
 }
