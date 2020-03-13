@@ -16,7 +16,7 @@ namespace OLC1_Proyecto1
         public LinkedList<Estado> EstadosAFN = new LinkedList<Estado>();       
         AFN RegexAFN;
         public LinkedList<Estado> EstadosAFD = new LinkedList<Estado>();
-        
+        public LinkedList<String> Alfabeto;
 
         public void setID(String arg1)
         {
@@ -151,7 +151,7 @@ namespace OLC1_Proyecto1
             saveFile.DefaultExt = "dot";
             saveFile.AddExtension = true;
 
-            saveFile.Title = "Guardar Grafico";
+            saveFile.Title = "Guardar AFN";
             if (saveFile.ShowDialog() == DialogResult.OK)
             {
                 FileStream MyStream = new FileStream(saveFile.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
@@ -266,7 +266,7 @@ namespace OLC1_Proyecto1
         public void createSubConjuntos()
         {
             Estado NewEstadoAFD = new Estado();
-            LinkedList<String> Alfabeto = new LinkedList<String>();
+            Alfabeto = new LinkedList<String>();
             LinkedList<Estado> AuxList;
             cerradura(RegexAFN.getEstadoInicial(), NewEstadoAFD.getEstadosAFN());
             NewEstadoAFD.setID(Estado.Contador++);
@@ -361,7 +361,7 @@ namespace OLC1_Proyecto1
             saveFile.DefaultExt = "dot";
             saveFile.AddExtension = true;
 
-            saveFile.Title = "Guardar Grafico";
+            saveFile.Title = "Guardar AFD";
             if (saveFile.ShowDialog() == DialogResult.OK)
             {
                 FileStream MyStream = new FileStream(saveFile.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
@@ -438,12 +438,12 @@ namespace OLC1_Proyecto1
         public Boolean TestLexema(String arg1)
         {
             int EstadoID = 0;
-            EstadoID = this.EstadosAFN.ElementAt(EstadoID).testChar(arg1, this.Nodos, this.EstadosAFN);
+            EstadoID = this.EstadosAFD.ElementAt(EstadoID).testChar(arg1, this.Nodos, this.EstadosAFD);
             if (EstadoID == -1)
             {
                 return false;
             }
-            else if (this.EstadosAFN.ElementAt(EstadoID).getAceptacion())
+            else if (this.EstadosAFD.ElementAt(EstadoID).getAceptacion())
             {
                 return true;
             }

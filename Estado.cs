@@ -132,7 +132,7 @@ namespace OLC1_Proyecto1
         }
 
 
-        //REGRESA -100 SI NO HAY TRANSICION , DE NO SER ASI REGRESA ID DEL ESTADO DESTINO
+        //REGRESA -1 SI NO HAY TRANSICION , DE NO SER ASI REGRESA ID DEL ESTADO DESTINO
         public int testChar(String arg1, LinkedList<Nodo> ListaNodos, LinkedList<Estado> Estados)
         {
 
@@ -168,7 +168,7 @@ namespace OLC1_Proyecto1
                         }
                         else
                         {
-                            //SI NO RETORNAR ESTADOID -1
+                            //SI NO RETORNAR ESTADO ID -1
                             return -1;
                         }
                     }
@@ -220,6 +220,42 @@ namespace OLC1_Proyecto1
             }
             return EstadoID;
         }
+
+        public void testLexema(String arg1, LinkedList<Conjunto> Conjuntos, LinkedList<Estado> Estados)
+        {
+            foreach(Transicion auxTransicion in ListaTransiciones){
+                //SI EL TERMINAL DE LA TRANSICION ES UN CONJUNTO
+                if (esConjunto(auxTransicion.getTerminalAFD(),Conjuntos))
+                {
+
+                }
+                else
+                {
+                    if (arg1.StartsWith(auxTransicion.getTerminalAFD()))
+                    {
+
+                        arg1.TrimStart(auxTransicion.getTerminalAFD().ToCharArray());
+
+                        //return auxTransicion.getDestino().testLexema(arg1, Conjuntos, Estados);
+                    }
+                }
+            }
+            //NO HAY TRANSICION
+            //return -1;
+        }
+
+        public Boolean esConjunto(String arg1, LinkedList<Conjunto> Conjuntos)
+        {
+            foreach (Conjunto auxConjunto in Conjuntos)
+            {
+                if (auxConjunto.getID().Equals(arg1))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
         //REGRESA NODO CON EL ID INDICADO
         public Nodo getNodoTerminal(LinkedList<Nodo> ListaNodos, int ID)

@@ -35,7 +35,12 @@ namespace OLC1_Proyecto1
 
         String Lexema;
         int ID;
+        int fila;
+        int columna;
         TipoToken Tipo;
+
+        public int Columna { get => columna; set => columna = value; }
+        public int Fila { get => fila; set => fila = value; }
 
         //Constructor
         public Token()
@@ -51,6 +56,11 @@ namespace OLC1_Proyecto1
         public void setID(int arg1)
         {
             this.ID = arg1;
+        }
+
+        public int getID()
+        {
+            return this.ID;
         }
 
         public void setTipo(TipoToken tipo)

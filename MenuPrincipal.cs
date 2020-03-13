@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,13 +26,25 @@ namespace OLC1_Proyecto1
         private void Button1_Click(object sender, EventArgs e)
         {
             MainScanner = new Scanner();
+            Program.RutasAFD.Clear();
+            Program.RutasAFN.Clear();
             MainScanner.ScanText(ActualTxtCodigo);
-            MainScanner.analizeTokens();
-            MainScanner.analizeExpresiones();
-            NumImagen = Program.RutasAFN.Count;
-            NumImagen = NumImagen + Program.RutasAFD.Count;
-            ApuntadorImagen = 0;
-            automataPictureBox.Image = Image.FromFile(Program.RutasAFN.ElementAt(0));
+            if (MainScanner.Errores)
+            {
+                MessageBox.Show("Se encontraron Errores Lexicos", "Grafico", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MainScanner.reporteErrores();
+            }
+            else
+            {
+                MainScanner.analizeTokens();
+                MainScanner.analizeExpresiones();
+                NumImagen = Program.RutasAFN.Count;
+                NumImagen = NumImagen + Program.RutasAFD.Count;
+                ApuntadorImagen = 0;
+                automataPictureBox.Image = Image.FromFile(Program.RutasAFN.ElementAt(0));
+                ActualizarTablaTransiciones(ApuntadorImagen, true);
+            }
+            
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -72,10 +85,12 @@ namespace OLC1_Proyecto1
                 if (ApuntadorImagen == 0 || ApuntadorImagen < Program.RutasAFN.Count)
                 {
                     automataPictureBox.Image = Image.FromFile(Program.RutasAFN.ElementAt(ApuntadorImagen));
+                    ActualizarTablaTransiciones(ApuntadorImagen,true);
                 }
                 else
                 {
                     automataPictureBox.Image = Image.FromFile(Program.RutasAFD.ElementAt(ApuntadorImagen - Program.RutasAFN.Count));
+                    ActualizarTablaTransiciones(ApuntadorImagen, false);
                 }
             }
         }
@@ -88,17 +103,95 @@ namespace OLC1_Proyecto1
                 if (ApuntadorImagen < Program.RutasAFN.Count)
                 {
                     automataPictureBox.Image = Image.FromFile(Program.RutasAFN.ElementAt(ApuntadorImagen));
+                    ActualizarTablaTransiciones(ApuntadorImagen, true);
                 }
                 else
                 {
                     automataPictureBox.Image = Image.FromFile(Program.RutasAFD.ElementAt(ApuntadorImagen - Program.RutasAFN.Count));
+                    ActualizarTablaTransiciones(ApuntadorImagen, false);
+                }
+            }
+        }
+        //FUENTE TRUE SI ES AFN
+        private void ActualizarTablaTransiciones(int Apuntador,bool Fuente)
+        {
+            dataGridView1.Rows.Clear();
+            dataGridView1.Columns.Clear();
+            dataGridView1.ForeColor = Color.Black;
+            if (Fuente)
+            {
+                Regex TempRegex = MainScanner.Expresiones.ElementAt(Apuntador);
+                dataGridView1.Columns.Add("Estado", "Estado");
+                foreach (String auxString in TempRegex.Alfabeto){
+                    dataGridView1.Columns.Add(auxString,auxString);
+                }
+                dataGridView1.Columns.Add("Epsilon", "Epsilon");
+                foreach (Estado auxEstado in TempRegex.EstadosAFN )
+                {
+                    int rowIndex = this.dataGridView1.Rows.Add();
+                    var row = this.dataGridView1.Rows[rowIndex];
+                    row.Cells["Estado"].Value = auxEstado.getID().ToString();
+                    foreach (Transicion auxTransicion in auxEstado.getTransiciones())
+                    {
+                        if (auxTransicion.getIDTerminal()==-1)
+                        {
+                            row.Cells["Epsilon"].Value = auxTransicion.getDestino().getID();
+                        }
+                        else
+                        {
+                            row.Cells[auxTransicion.getIDTerminal()].Value = auxTransicion.getDestino().getID().ToString();
+                        }
+                        
+                    }
+                }
+            }
+            else
+            {
+                Regex TempRegex =  MainScanner.Expresiones.ElementAt(Apuntador-Program.RutasAFN.Count);
+                dataGridView1.Columns.Add("Estado", "Estado");
+                foreach (String auxString in TempRegex.Alfabeto)
+                {
+                    dataGridView1.Columns.Add(auxString, auxString);
+                }
+                foreach (Estado auxEstado in TempRegex.EstadosAFD)
+                {
+                    int rowIndex = this.dataGridView1.Rows.Add();
+                    var row = this.dataGridView1.Rows[rowIndex];
+                    row.Cells["Estado"].Value = auxEstado.getID().ToString();
+                    foreach (Transicion auxTransicion in auxEstado.getTransiciones())
+                    {
+                        row.Cells[auxTransicion.getTerminalAFD()].Value = auxTransicion.getDestino().getID().ToString();
+
+                    }
                 }
             }
         }
 
-        private void ActulizarTablaTransiciones(int Apuntador,bool Fuente)
+        private void AbrirBtn_Click(object sender, EventArgs e)
         {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            { 
+                tabControl1.SelectedTab.Text = openFileDialog1.SafeFileName;
+                ActualTxtCodigo.Text = File.ReadAllText(openFileDialog1.FileName);
+            }
+        }
 
+        private void GuardarBtn_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                FileStream MyStream = new FileStream(saveFileDialog1.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
+                StreamWriter MyWriter = new StreamWriter(MyStream);
+                MyWriter.Write(ActualTxtCodigo.Text);
+                MyWriter.Close();
+                MyStream.Close();
+                MessageBox.Show("Guardado Correctamente", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

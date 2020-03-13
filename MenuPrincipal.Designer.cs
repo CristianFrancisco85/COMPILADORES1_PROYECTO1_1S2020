@@ -36,9 +36,12 @@
             this.button3 = new System.Windows.Forms.Button();
             this.automataPictureBox = new System.Windows.Forms.PictureBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.EstadoColumna = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.anteriorBtn = new System.Windows.Forms.Button();
             this.siguienteBtn = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.abrirBtn = new System.Windows.Forms.Button();
+            this.guardarBtn = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.textEditorTabPage1 = new Practica1LF_AnalizadorLexico.TextEditorTabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -80,6 +83,7 @@
             this.button2.TabIndex = 4;
             this.button2.Text = "Analizar Lexemas";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // tabControl1
             // 
@@ -105,10 +109,10 @@
             // button3
             // 
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.button3.Location = new System.Drawing.Point(50, 12);
+            this.button3.ForeColor = System.Drawing.Color.YellowGreen;
+            this.button3.Location = new System.Drawing.Point(468, 24);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(89, 61);
+            this.button3.Size = new System.Drawing.Size(188, 38);
             this.button3.TabIndex = 6;
             this.button3.Text = "Nueva Pestaña";
             this.button3.UseVisualStyleBackColor = true;
@@ -126,23 +130,16 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.EstadoColumna});
             this.dataGridView1.Location = new System.Drawing.Point(717, 457);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(553, 241);
             this.dataGridView1.TabIndex = 8;
             // 
-            // EstadoColumna
-            // 
-            this.EstadoColumna.HeaderText = "Estado";
-            this.EstadoColumna.Name = "EstadoColumna";
-            // 
             // anteriorBtn
             // 
             this.anteriorBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.anteriorBtn.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.anteriorBtn.Location = new System.Drawing.Point(713, 33);
+            this.anteriorBtn.Location = new System.Drawing.Point(713, 22);
             this.anteriorBtn.Name = "anteriorBtn";
             this.anteriorBtn.Size = new System.Drawing.Size(171, 40);
             this.anteriorBtn.TabIndex = 9;
@@ -154,13 +151,46 @@
             // 
             this.siguienteBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.siguienteBtn.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.siguienteBtn.Location = new System.Drawing.Point(1099, 33);
+            this.siguienteBtn.Location = new System.Drawing.Point(1099, 24);
             this.siguienteBtn.Name = "siguienteBtn";
             this.siguienteBtn.Size = new System.Drawing.Size(171, 40);
             this.siguienteBtn.TabIndex = 10;
             this.siguienteBtn.Text = "AF Siguiente";
             this.siguienteBtn.UseVisualStyleBackColor = true;
             this.siguienteBtn.Click += new System.EventHandler(this.SiguienteBtn_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "Archivo ER|*.er";
+            // 
+            // abrirBtn
+            // 
+            this.abrirBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.abrirBtn.ForeColor = System.Drawing.Color.YellowGreen;
+            this.abrirBtn.Location = new System.Drawing.Point(50, 24);
+            this.abrirBtn.Name = "abrirBtn";
+            this.abrirBtn.Size = new System.Drawing.Size(188, 38);
+            this.abrirBtn.TabIndex = 11;
+            this.abrirBtn.Text = "Abrir Archivo";
+            this.abrirBtn.UseVisualStyleBackColor = true;
+            this.abrirBtn.Click += new System.EventHandler(this.AbrirBtn_Click);
+            // 
+            // guardarBtn
+            // 
+            this.guardarBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.guardarBtn.ForeColor = System.Drawing.Color.YellowGreen;
+            this.guardarBtn.Location = new System.Drawing.Point(256, 24);
+            this.guardarBtn.Name = "guardarBtn";
+            this.guardarBtn.Size = new System.Drawing.Size(188, 38);
+            this.guardarBtn.TabIndex = 12;
+            this.guardarBtn.Text = "Guardar Archivo";
+            this.guardarBtn.UseVisualStyleBackColor = true;
+            this.guardarBtn.Click += new System.EventHandler(this.GuardarBtn_Click);
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "Archivo ER|*.er";
             // 
             // textEditorTabPage1
             // 
@@ -177,6 +207,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
             this.ClientSize = new System.Drawing.Size(1684, 821);
+            this.Controls.Add(this.guardarBtn);
+            this.Controls.Add(this.abrirBtn);
             this.Controls.Add(this.siguienteBtn);
             this.Controls.Add(this.anteriorBtn);
             this.Controls.Add(this.dataGridView1);
@@ -211,9 +243,12 @@
         private Practica1LF_AnalizadorLexico.TextEditorTabPage textEditorTabPage1;
         private System.Windows.Forms.PictureBox automataPictureBox;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn EstadoColumna;
         private System.Windows.Forms.Button anteriorBtn;
         private System.Windows.Forms.Button siguienteBtn;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button abrirBtn;
+        private System.Windows.Forms.Button guardarBtn;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

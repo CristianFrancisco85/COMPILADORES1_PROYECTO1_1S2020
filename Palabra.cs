@@ -10,6 +10,11 @@ namespace OLC1_Proyecto1
     {
         private String ID;
         private String Lexema;
+        int fila;
+        int columna;
+
+        public int Columna { get => columna; set => columna = value; }
+        public int Fila { get => fila; set => fila = value; }
 
         public void setLexema(String arg1)
         {

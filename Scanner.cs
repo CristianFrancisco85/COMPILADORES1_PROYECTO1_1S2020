@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
 
 namespace OLC1_Proyecto1
 {
@@ -11,27 +14,29 @@ namespace OLC1_Proyecto1
     {
 
         LinkedList<Token> ListaTokens = new LinkedList<Token>();
-        LinkedList<Token> ListaErrores = new LinkedList<Token>();
-        LinkedList<Conjunto> Conjuntos = new LinkedList<Conjunto>();
+        public LinkedList<Token> ListaErrores = new LinkedList<Token>();
+        public LinkedList<Conjunto> Conjuntos = new LinkedList<Conjunto>();
         LinkedList<Palabra> Palabras = new LinkedList<Palabra>();
         public LinkedList<Regex> Expresiones = new LinkedList<Regex>();
         int TokenID = 0; //Para Simbolos
         int ErrorID = 0; //Para Errores
+        public bool Errores;
 
         //Realiza Analisis Lexico y Agrupa Lexemas validos en Tokens
         public void ScanText(RichTextBox Entrada)
         {
             //Guarda valor ASCII
-            int MyChar;
+            char MyChar;
             //Cantidad de Caracteres
             int NCaracteres = Entrada.Text.Length;
 
-            for (int i =0; i<NCaracteres; i++)
+            for (int i = 0; i < NCaracteres; i++)
             {
                 MyChar = Entrada.Text[i];
 
                 Token TempToken = new Token();
                 String TempLexema = "";
+                Boolean Control = true;
 
                 //PARA SIMBOLOS INDIVIDUALES
 
@@ -41,199 +46,176 @@ namespace OLC1_Proyecto1
                         TempToken.setTipo(Token.TipoToken.ABRE_LLAVE);
                         TempToken.setLexema("{");
                         TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
                         ListaTokens.AddLast(TempToken);
+                        Control = false;
                         break;
                     case '}':
                         TempToken.setTipo(Token.TipoToken.CIERRA_LLAVE);
                         TempToken.setLexema("}");
                         TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
                         ListaTokens.AddLast(TempToken);
+                        Control = false;
                         break;
                     case '%':
                         TempToken.setTipo(Token.TipoToken.PORCENTAJE);
                         TempToken.setLexema("%");
                         TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
                         ListaTokens.AddLast(TempToken);
+                        Control = false;
                         break;
                     case '~':
                         TempToken.setTipo(Token.TipoToken.GUION_CURVO);
                         TempToken.setLexema("~");
                         TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
                         ListaTokens.AddLast(TempToken);
+                        Control = false;
                         break;
                     case '-':
                         TempToken.setTipo(Token.TipoToken.GUION);
                         TempToken.setLexema("-");
                         TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
                         ListaTokens.AddLast(TempToken);
+                        Control = false;
                         break;
                     case '>':
                         TempToken.setTipo(Token.TipoToken.SIGNO_MAYOR);
                         TempToken.setLexema(">");
                         TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
                         ListaTokens.AddLast(TempToken);
+                        Control = false;
                         break;
                     case '.':
                         TempToken.setTipo(Token.TipoToken.PUNTO);
                         TempToken.setLexema(".");
                         TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
                         ListaTokens.AddLast(TempToken);
+                        Control = false;
                         break;
                     case '*':
                         TempToken.setTipo(Token.TipoToken.SIGNO_ASTERISCO);
                         TempToken.setLexema("*");
                         TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
                         ListaTokens.AddLast(TempToken);
+                        Control = false;
                         break;
                     case '+':
                         TempToken.setTipo(Token.TipoToken.SIGNO_MAS);
                         TempToken.setLexema("+");
                         TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
                         ListaTokens.AddLast(TempToken);
+                        Control = false;
                         break;
                     case ';':
                         TempToken.setTipo(Token.TipoToken.PUNTO_COMA);
                         TempToken.setLexema(";");
                         TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
                         ListaTokens.AddLast(TempToken);
+                        Control = false;
                         break;
                     case ':':
                         TempToken.setTipo(Token.TipoToken.DOS_PUNTOS);
                         TempToken.setLexema(":");
                         TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
                         ListaTokens.AddLast(TempToken);
+                        Control = false;
                         break;
                     case '|':
                         TempToken.setTipo(Token.TipoToken.SIGNO_ALTERNANCIA);
                         TempToken.setLexema("|");
                         TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
                         ListaTokens.AddLast(TempToken);
+                        Control = false;
                         break;
                     case '?':
                         TempToken.setTipo(Token.TipoToken.SIGNO_INTERROGACION);
                         TempToken.setLexema("?");
                         TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
                         ListaTokens.AddLast(TempToken);
+                        Control = false;
                         break;
                     case ',':
                         TempToken.setTipo(Token.TipoToken.COMA);
                         TempToken.setLexema(",");
                         TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
                         ListaTokens.AddLast(TempToken);
+                        Control = false;
                         break;
                 }
 
-                //PARA IDENTIFICADORES 
-                //if (testAlfabeto(MyChar) && MyChar>90)
-                if (testAlfabeto(MyChar))
+
+                if (Control)
                 {
-                    for (int j = i; j < NCaracteres; j++)
+                    //PARA IDENTIFICADORES 
+                    //if (testAlfabeto(MyChar) && MyChar>90)
+                    if (testAlfabeto(MyChar))
                     {
-                        MyChar = Entrada.Text[j];
-                        if (testAlfabeto(MyChar))
-                        {
-                            TempLexema = TempLexema + Entrada.Text[j];
-                        }
-                        else
-                        {
-                            i = j - 1;
-                            break;
-                        }
-                    }
-                    //HACER IDENTIFICACION DE PALABRAS RESERVADAS SI FUERA NECESARIO
-                    TempToken.setTipo(Token.TipoToken.ID);
-                    TempToken.setLexema(TempLexema);
-                    TempToken.setID(TokenID++);
-                    ListaTokens.AddLast(TempToken);
-                }
-
-                //PARA CADENAS
-
-                else if ((int)MyChar == 34)
-                {
-                    i++;
-                    MyChar = Entrada.Text[i];
-                    for (int j = i; j < NCaracteres ; j++)
-                    {
-                        MyChar = Entrada.Text[j];
-                        if ((int)MyChar == 34)
-                        {
-                            i = j;
-                            TempToken.setTipo(Token.TipoToken.CADENA);
-                            TempToken.setLexema(TempLexema);
-                            TempToken.setID(TokenID++);
-                            ListaTokens.AddLast(TempToken);
-                            break;
-                        }
-                        else
-                        {
-                            TempLexema = TempLexema + Entrada.Text[j];
-                        }
-                    }
-                }
-
-                //PARA COMENTARIOS MULTILINEA
-
-                else if (MyChar == '<')
-                {
-                    i++;
-                    MyChar = Entrada.Text[i];
-                    if (MyChar == '!')
-                    {
-                        i++;
-                        MyChar = Entrada.Text[i];
-                        for (int j = i; j <NCaracteres; j++)
+                        for (int j = i; j < NCaracteres; j++)
                         {
                             MyChar = Entrada.Text[j];
-                            if (MyChar == '!')
+                            if (testAlfabeto(MyChar))
                             {
-                                j++;
-                                MyChar = Entrada.Text[j];
-                                if (MyChar == '>')
-                                {
-                                    i = j;
-                                    TempToken.setTipo(Token.TipoToken.COMENTARIO);
-                                    TempToken.setLexema(TempLexema);
-                                    TempToken.setID(TokenID++);
-                                    ListaTokens.AddLast(TempToken);
-                                    break;
-                                }
-                                else
-                                {
-                                    //CONTROLAR EXCEPCION DE MAL FINAL DE COMENTARIO 
-                                }
+                                TempLexema = TempLexema + Entrada.Text[j];
                             }
                             else
                             {
-                                TempLexema = TempLexema + Entrada.Text[j] ;
+                                i = j - 1;
+                                break;
                             }
                         }
+                        //HACER IDENTIFICACION DE PALABRAS RESERVADAS SI FUERA NECESARIO
+                        TempToken.setTipo(Token.TipoToken.ID);
+                        TempToken.setLexema(TempLexema);
+                        TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
+                        ListaTokens.AddLast(TempToken);
                     }
-                    else
-                    {
-                        //CONTROLAR EXCEPCION DE MAL INICIO DE COMENTARIO
-                    }
-                }
 
-                //PARA COMENTARIOS DE UNA LINEA
-                else if (MyChar == '/')
-                {
-                    i++;
-                    MyChar = Entrada.Text[i];
-                    if (MyChar == '/')
+                    //PARA CADENAS
+
+                    else if ((int)MyChar == 34)
                     {
                         i++;
                         MyChar = Entrada.Text[i];
-                        for (int j = i; j <NCaracteres; j++)
+                        for (int j = i; j < NCaracteres; j++)
                         {
                             MyChar = Entrada.Text[j];
-
-                            if ((int)MyChar == 10)
+                            if ((int)MyChar == 34)
                             {
                                 i = j;
-                                TempToken.setTipo(Token.TipoToken.COMENTARIO);
+                                TempToken.setTipo(Token.TipoToken.CADENA);
                                 TempToken.setLexema(TempLexema);
                                 TempToken.setID(TokenID++);
+                                TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                                TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
                                 ListaTokens.AddLast(TempToken);
                                 break;
                             }
@@ -243,11 +225,100 @@ namespace OLC1_Proyecto1
                             }
                         }
                     }
-                    else
+
+                    //PARA COMENTARIOS MULTILINEA
+
+                    else if (MyChar == '<')
                     {
-                        //CONTROLAR EXCEPCION DE MA INICIO DE COMENTARIO
+                        i++;
+                        MyChar = Entrada.Text[i];
+                        if (MyChar == '!')
+                        {
+                            i++;
+                            MyChar = Entrada.Text[i];
+                            for (int j = i; j < NCaracteres; j++)
+                            {
+                                MyChar = Entrada.Text[j];
+                                if (MyChar == '!')
+                                {
+                                    j++;
+                                    MyChar = Entrada.Text[j];
+                                    if (MyChar == '>')
+                                    {
+                                        i = j;
+                                        TempToken.setTipo(Token.TipoToken.COMENTARIO);
+                                        TempToken.setLexema(TempLexema);
+                                        TempToken.setID(TokenID++);
+                                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
+                                        ListaTokens.AddLast(TempToken);
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        //CONTROLAR EXCEPCION DE MAL FINAL DE COMENTARIO 
+                                    }
+                                }
+                                else
+                                {
+                                    TempLexema = TempLexema + Entrada.Text[j];
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //CONTROLAR EXCEPCION DE MAL INICIO DE COMENTARIO
+                        }
+                    }
+
+                    //PARA COMENTARIOS DE UNA LINEA
+                    else if (MyChar == '/')
+                    {
+                        i++;
+                        MyChar = Entrada.Text[i];
+                        if (MyChar == '/')
+                        {
+                            i++;
+                            MyChar = Entrada.Text[i];
+                            for (int j = i; j < NCaracteres; j++)
+                            {
+                                MyChar = Entrada.Text[j];
+
+                                if ((int)MyChar == 10)
+                                {
+                                    i = j;
+                                    TempToken.setTipo(Token.TipoToken.COMENTARIO);
+                                    TempToken.setLexema(TempLexema);
+                                    TempToken.setID(TokenID++);
+                                    TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                                    TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
+                                    ListaTokens.AddLast(TempToken);
+                                    break;
+                                }
+                                else
+                                {
+                                    TempLexema = TempLexema + Entrada.Text[j];
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //CONTROLAR EXCEPCION DE MA INICIO DE COMENTARIO
+                        }
+                    }
+
+                    else if (MyChar >= 125)
+                    {
+                        Errores = true;
+
+                        TempToken.setID(ErrorID++);
+                        TempToken.setLexema(MyChar.ToString());
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
+                        ListaErrores.AddLast(TempToken);
                     }
                 }
+                
 
             }
 
@@ -291,6 +362,8 @@ namespace OLC1_Proyecto1
                             Palabra TempPalabra = new Palabra();
                             TempPalabra.setID(ListaTokens.ElementAt(i - 2).getLexema());
                             TempPalabra.setLexema(ListaTokens.ElementAt(i).getLexema());
+                            TempPalabra.Fila = ListaTokens.ElementAt(i).Fila;
+                            TempPalabra.Columna = ListaTokens.ElementAt(i).Columna;
                             Palabras.AddLast(TempPalabra);
                         }
 
@@ -416,6 +489,68 @@ namespace OLC1_Proyecto1
                 TempRegex.graphAFD();
             }
             Console.WriteLine("dsad");
+        }
+
+        public void reporteErrores()
+        {
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.Filter = "Archivo PDF (*.pdf)|*.pdf";
+            saveFile.DefaultExt = "pdf";
+            saveFile.AddExtension = true;
+
+            saveFile.Title = "Guardar Reporte Analisis Lexico";
+            if (saveFile.ShowDialog() == DialogResult.OK)
+            {
+                String path = saveFile.FileName;
+                path = (path.EndsWith(".pdf")) ? path : path + ".pdf";
+                Document Report = new Document();
+                PdfWriter.GetInstance(Report, new FileStream(path, FileMode.Create));
+                Report.Open();
+                Report.Add(new Paragraph("REPORTE ANALISIS LEXICO", FontFactory.GetFont(FontFactory.HELVETICA, 20, BaseColor.BLUE)));
+                Report.Add(new Paragraph("\n \n "));
+
+                PdfPTable Tabla1 = new PdfPTable(4);
+                Tabla1.WidthPercentage = 100;
+                PdfPCell titleCell = new PdfPCell(new Paragraph("ERRORES"));
+                titleCell.Colspan=8;
+                titleCell.HorizontalAlignment=Element.ALIGN_CENTER;
+                titleCell.BackgroundColor=BaseColor.LIGHT_GRAY;
+                Tabla1.AddCell(titleCell);
+                // COLUMNS NAMES
+                Paragraph column1 = new Paragraph("ID", FontFactory.GetFont(FontFactory.HELVETICA, 12));
+                Paragraph column2 = new Paragraph("Lexema", FontFactory.GetFont(FontFactory.HELVETICA, 12));
+                Paragraph column3 = new Paragraph("Fila", FontFactory.GetFont(FontFactory.HELVETICA, 12));
+                Paragraph column4 = new Paragraph("Columna", FontFactory.GetFont(FontFactory.HELVETICA, 12));
+
+                Tabla1.AddCell(column1);
+                Tabla1.AddCell(column2);
+                Tabla1.AddCell(column3);
+                Tabla1.AddCell(column4);
+
+                foreach(Token TempToken in ListaErrores){
+                    Tabla1.AddCell(TempToken.getID().ToString());
+                    Tabla1.AddCell(TempToken.getLexema());
+                    Tabla1.AddCell(TempToken.Fila.ToString());
+                    Tabla1.AddCell(TempToken.Columna.ToString());
+                }
+
+                Report.Add(Tabla1);
+                Report.Close();
+                MessageBox.Show("Reporte de Errores Guardado Correctamente", "PDF", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+
+        }
+
+        public void validarLexemas()
+        {
+            foreach (Regex auxRegex in Expresiones)
+            {
+                foreach (Palabra auxPalabra in Palabras)
+                {
+
+                }
+            }
         }
 
     }
