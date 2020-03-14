@@ -42,7 +42,15 @@
             this.abrirBtn = new System.Windows.Forms.Button();
             this.guardarBtn = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.ErroresTxt = new System.Windows.Forms.RichTextBox();
+            this.TokensTxt = new System.Windows.Forms.RichTextBox();
+            this.Automata = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.textEditorTabPage1 = new Practica1LF_AnalizadorLexico.TextEditorTabPage();
+            this.guardarTokens = new System.Windows.Forms.Button();
+            this.guardarErrores = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.automataPictureBox)).BeginInit();
@@ -54,7 +62,7 @@
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(1394, 807);
+            this.label2.Location = new System.Drawing.Point(1494, 807);
             this.label2.Margin = new System.Windows.Forms.Padding(1);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(291, 16);
@@ -120,26 +128,28 @@
             // 
             // automataPictureBox
             // 
-            this.automataPictureBox.Location = new System.Drawing.Point(713, 120);
+            this.automataPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.automataPictureBox.Location = new System.Drawing.Point(693, 120);
             this.automataPictureBox.Name = "automataPictureBox";
-            this.automataPictureBox.Size = new System.Drawing.Size(557, 264);
+            this.automataPictureBox.Size = new System.Drawing.Size(593, 288);
             this.automataPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.automataPictureBox.TabIndex = 7;
             this.automataPictureBox.TabStop = false;
             // 
             // dataGridView1
             // 
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(717, 457);
+            this.dataGridView1.Location = new System.Drawing.Point(693, 457);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(553, 241);
+            this.dataGridView1.Size = new System.Drawing.Size(593, 288);
             this.dataGridView1.TabIndex = 8;
             // 
             // anteriorBtn
             // 
             this.anteriorBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.anteriorBtn.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.anteriorBtn.Location = new System.Drawing.Point(713, 22);
+            this.anteriorBtn.Location = new System.Drawing.Point(815, 23);
             this.anteriorBtn.Name = "anteriorBtn";
             this.anteriorBtn.Size = new System.Drawing.Size(171, 40);
             this.anteriorBtn.TabIndex = 9;
@@ -151,7 +161,7 @@
             // 
             this.siguienteBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.siguienteBtn.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.siguienteBtn.Location = new System.Drawing.Point(1099, 24);
+            this.siguienteBtn.Location = new System.Drawing.Point(1017, 24);
             this.siguienteBtn.Name = "siguienteBtn";
             this.siguienteBtn.Size = new System.Drawing.Size(171, 40);
             this.siguienteBtn.TabIndex = 10;
@@ -192,6 +202,64 @@
             // 
             this.saveFileDialog1.Filter = "Archivo ER|*.er";
             // 
+            // ErroresTxt
+            // 
+            this.ErroresTxt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.ErroresTxt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ErroresTxt.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ErroresTxt.Location = new System.Drawing.Point(1320, 120);
+            this.ErroresTxt.Name = "ErroresTxt";
+            this.ErroresTxt.Size = new System.Drawing.Size(452, 288);
+            this.ErroresTxt.TabIndex = 13;
+            this.ErroresTxt.Text = "";
+            // 
+            // TokensTxt
+            // 
+            this.TokensTxt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.TokensTxt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TokensTxt.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.TokensTxt.Location = new System.Drawing.Point(1320, 457);
+            this.TokensTxt.Name = "TokensTxt";
+            this.TokensTxt.Size = new System.Drawing.Size(452, 288);
+            this.TokensTxt.TabIndex = 14;
+            this.TokensTxt.Text = "";
+            // 
+            // Automata
+            // 
+            this.Automata.AutoSize = true;
+            this.Automata.Location = new System.Drawing.Point(689, 96);
+            this.Automata.Name = "Automata";
+            this.Automata.Size = new System.Drawing.Size(94, 21);
+            this.Automata.TabIndex = 15;
+            this.Automata.Text = "Automata";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(689, 433);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(175, 21);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "Tabla de Transiciones";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(1316, 96);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(60, 21);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "Errores";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(1319, 433);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(62, 21);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "Tokens";
+            // 
             // textEditorTabPage1
             // 
             this.textEditorTabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
@@ -201,12 +269,44 @@
             this.textEditorTabPage1.Size = new System.Drawing.Size(605, 575);
             this.textEditorTabPage1.TabIndex = 0;
             // 
+            // guardarTokens
+            // 
+            this.guardarTokens.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.guardarTokens.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guardarTokens.ForeColor = System.Drawing.Color.Goldenrod;
+            this.guardarTokens.Location = new System.Drawing.Point(1653, 426);
+            this.guardarTokens.Name = "guardarTokens";
+            this.guardarTokens.Size = new System.Drawing.Size(119, 25);
+            this.guardarTokens.TabIndex = 19;
+            this.guardarTokens.Text = "Guardar XML";
+            this.guardarTokens.UseVisualStyleBackColor = true;
+            // 
+            // guardarErrores
+            // 
+            this.guardarErrores.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.guardarErrores.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guardarErrores.ForeColor = System.Drawing.Color.Goldenrod;
+            this.guardarErrores.Location = new System.Drawing.Point(1653, 89);
+            this.guardarErrores.Name = "guardarErrores";
+            this.guardarErrores.Size = new System.Drawing.Size(119, 25);
+            this.guardarErrores.TabIndex = 20;
+            this.guardarErrores.Text = "Guardar XML";
+            this.guardarErrores.UseVisualStyleBackColor = true;
+            // 
             // MenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.ClientSize = new System.Drawing.Size(1684, 821);
+            this.ClientSize = new System.Drawing.Size(1784, 821);
+            this.Controls.Add(this.guardarErrores);
+            this.Controls.Add(this.guardarTokens);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.Automata);
+            this.Controls.Add(this.TokensTxt);
+            this.Controls.Add(this.ErroresTxt);
             this.Controls.Add(this.guardarBtn);
             this.Controls.Add(this.abrirBtn);
             this.Controls.Add(this.siguienteBtn);
@@ -249,6 +349,14 @@
         private System.Windows.Forms.Button abrirBtn;
         private System.Windows.Forms.Button guardarBtn;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.RichTextBox ErroresTxt;
+        private System.Windows.Forms.RichTextBox TokensTxt;
+        private System.Windows.Forms.Label Automata;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button guardarTokens;
+        private System.Windows.Forms.Button guardarErrores;
     }
 }
 

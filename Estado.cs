@@ -221,39 +221,65 @@ namespace OLC1_Proyecto1
             return EstadoID;
         }
 
-        public void testLexema(String arg1, LinkedList<Conjunto> Conjuntos, LinkedList<Estado> Estados)
+        public int testLexema(String arg1, LinkedList<Conjunto> Conjuntos, LinkedList<Estado> Estados)
         {
             foreach(Transicion auxTransicion in ListaTransiciones){
                 //SI EL TERMINAL DE LA TRANSICION ES UN CONJUNTO
-                if (esConjunto(auxTransicion.getTerminalAFD(),Conjuntos))
+                if (esConjunto(auxTransicion.getTerminalAFD(),Conjuntos)!=null)
                 {
-
+                    if (esConjunto(auxTransicion.getTerminalAFD(), Conjuntos).testChar(arg1[0]))
+                    {
+                        if (arg1.Length == 1)
+                        {
+                            return auxTransicion.getDestino().getID();
+                        }
+                        else
+                        {
+                            arg1 = arg1.Substring(1);
+                            return auxTransicion.getDestino().testLexema(arg1, Conjuntos, Estados);
+                        }                     
+                    }
                 }
                 else
                 {
                     if (arg1.StartsWith(auxTransicion.getTerminalAFD()))
                     {
-
-                        arg1.TrimStart(auxTransicion.getTerminalAFD().ToCharArray());
-
-                        //return auxTransicion.getDestino().testLexema(arg1, Conjuntos, Estados);
+                        
+                        if (arg1.Length == auxTransicion.getTerminalAFD().Length)
+                        {
+                            return auxTransicion.getDestino().getID();
+                        }
+                        else
+                        {
+                            arg1 = arg1.Substring(auxTransicion.getTerminalAFD().Length);
+                            return auxTransicion.getDestino().testLexema(arg1, Conjuntos, Estados);                         
+                        }
+                        
                     }
                 }
             }
             //NO HAY TRANSICION
-            //return -1;
+            if (arg1.Length!=0)
+            {
+                return -1;
+            }
+            else
+            {
+                return this.ID;
+            }
+
         }
 
-        public Boolean esConjunto(String arg1, LinkedList<Conjunto> Conjuntos)
+        public Conjunto esConjunto(String arg1, LinkedList<Conjunto> Conjuntos)
         {
             foreach (Conjunto auxConjunto in Conjuntos)
             {
                 if (auxConjunto.getID().Equals(arg1))
                 {
-                    return true;
+                    return auxConjunto;
                 }
             }
-            return false;
+            return null;
         }
 
 

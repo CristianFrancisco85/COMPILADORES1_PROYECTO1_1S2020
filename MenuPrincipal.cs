@@ -139,7 +139,8 @@ namespace OLC1_Proyecto1
                         }
                         else
                         {
-                            row.Cells[auxTransicion.getIDTerminal()].Value = auxTransicion.getDestino().getID().ToString();
+
+                            row.Cells[TempRegex.StringIDTerminal(auxTransicion.getIDTerminal())].Value = auxTransicion.getDestino().getID().ToString();
                         }
                         
                     }
@@ -191,7 +192,7 @@ namespace OLC1_Proyecto1
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            
+            MainScanner.validarLexemas(TokensTxt,ErroresTxt);
         }
     }
 }

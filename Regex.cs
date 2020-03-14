@@ -435,10 +435,10 @@ namespace OLC1_Proyecto1
             return -1;
         }
 
-        public Boolean TestLexema(String arg1)
+        public Boolean TestLexema(String arg1, LinkedList<Conjunto> Conjuntos)
         {
             int EstadoID = 0;
-            EstadoID = this.EstadosAFD.ElementAt(EstadoID).testChar(arg1, this.Nodos, this.EstadosAFD);
+            EstadoID = this.EstadosAFD.ElementAt(EstadoID).testLexema(arg1,Conjuntos, this.EstadosAFD);
             if (EstadoID == -1)
             {
                 return false;
@@ -452,6 +452,18 @@ namespace OLC1_Proyecto1
                 return false;
             }
 
+        }
+
+        public string StringIDTerminal(int id)
+        {
+            foreach (Nodo AuxNodo in Nodos)
+            {
+                if (AuxNodo.getID()==id)
+                {
+                    return AuxNodo.getTerminal();
+                }
+            }
+            return "error";
         }
 
     }

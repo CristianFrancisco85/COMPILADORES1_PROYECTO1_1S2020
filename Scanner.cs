@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.IO;
+using System.Drawing;
 
 namespace OLC1_Proyecto1
 {
@@ -542,16 +543,81 @@ namespace OLC1_Proyecto1
 
         }
 
-        public void validarLexemas()
+        public void validarLexemas(RichTextBox TokensTxt, RichTextBox ErroresTxt)
         {
+            TokensTxt.AppendText("<ListaTokens>\n",Color.BlueViolet);
+            ErroresTxt.AppendText("<ListaErrores>\n", Color.BlueViolet);
             foreach (Regex auxRegex in Expresiones)
             {
                 foreach (Palabra auxPalabra in Palabras)
                 {
+                    if (auxRegex.TestLexema(auxPalabra.getLexema(), Conjuntos))
+                    {
+                        //GENERAR XML
+                        TokensTxt.AppendText("\t<Token>\n", Color.LimeGreen);
 
+                        TokensTxt.AppendText("\t\t<Nombre> ", Color.DarkOrange);
+                        TokensTxt.AppendText(auxRegex.getID(), Color.Gainsboro);
+                        TokensTxt.AppendText(" </Nombre>\n", Color.DarkOrange);
+
+                        TokensTxt.AppendText("\t\t<Valor> ", Color.DeepPink);
+                        TokensTxt.AppendText(auxPalabra.getLexema(),Color.Gainsboro);
+                        TokensTxt.AppendText(" </Valor>\n", Color.DeepPink);
+
+                        TokensTxt.AppendText("\t\t<Fila> ", Color.Crimson);
+                        TokensTxt.AppendText(auxPalabra.Fila.ToString(), Color.Gainsboro);
+                        TokensTxt.AppendText(" </Fila>\n", Color.Crimson);
+
+                        TokensTxt.AppendText("\t\t<Columa> ", Color.DodgerBlue);
+                        TokensTxt.AppendText(auxPalabra.Columna.ToString(), Color.Gainsboro);
+                        TokensTxt.AppendText(" </Columa>\n", Color.DodgerBlue);
+
+                        TokensTxt.AppendText("\t</Token>\n\n", Color.LimeGreen);
+
+                        
+                    }
+                    else
+                    {
+                        //GENERAR XML
+                        ErroresTxt.AppendText("\t<Error>\n", Color.LimeGreen);
+
+                        ErroresTxt.AppendText("\t\t<Valor> ", Color.DeepPink);
+                        ErroresTxt.AppendText(auxPalabra.getLexema(), Color.Gainsboro);
+                        ErroresTxt.AppendText(" </Valor>\n", Color.DeepPink);
+
+                        ErroresTxt.AppendText("\t\t<Fila> ", Color.Crimson);
+                        ErroresTxt.AppendText(auxPalabra.Fila.ToString(), Color.Gainsboro);
+                        ErroresTxt.AppendText(" </Fila>\n", Color.Crimson);
+
+                        ErroresTxt.AppendText("\t\t<Columa> ", Color.DodgerBlue);
+                        ErroresTxt.AppendText(auxPalabra.Columna.ToString(), Color.Gainsboro);
+                        ErroresTxt.AppendText(" </Columa>\n", Color.DodgerBlue);
+
+                        ErroresTxt.AppendText("\t</Error>\n\n", Color.LimeGreen);
+
+                    }
                 }
             }
+            TokensTxt.AppendText("</ListaTokens>", Color.BlueViolet);
+            ErroresTxt.AppendText("</ListaErrores>", Color.BlueViolet);
+
         }
 
+
     }
+
+    public static class RichTextBoxExtensions
+    {
+        //SE SOBRECARGAR EL METODO APPENDTEXT PARA PODER PINTAR EL TEXTO
+        public static void AppendText(this RichTextBox box, string text, Color color)
+        {
+            box.SelectionStart = box.TextLength;
+            box.SelectionLength = 0;
+            box.SelectionColor = color;
+            box.AppendText(text);
+            box.SelectionColor = box.ForeColor;
+        }
+    }
+
+
 }
