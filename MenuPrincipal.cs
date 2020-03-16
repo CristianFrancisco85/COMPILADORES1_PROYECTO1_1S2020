@@ -194,5 +194,31 @@ namespace OLC1_Proyecto1
         {
             MainScanner.validarLexemas(TokensTxt,ErroresTxt);
         }
+
+        private void GuardarErrores_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog2.ShowDialog() == DialogResult.OK)
+            {
+                FileStream MyStream = new FileStream(saveFileDialog2.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
+                StreamWriter MyWriter = new StreamWriter(MyStream);
+                MyWriter.Write(ErroresTxt.Text);
+                MyWriter.Close();
+                MyStream.Close();
+                MessageBox.Show("Guardado Correctamente", "XML", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void GuardarTokens_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog2.ShowDialog() == DialogResult.OK)
+            {
+                FileStream MyStream = new FileStream(saveFileDialog2.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
+                StreamWriter MyWriter = new StreamWriter(MyStream);
+                MyWriter.Write(TokensTxt.Text);
+                MyWriter.Close();
+                MyStream.Close();
+                MessageBox.Show("Guardado Correctamente", "XML", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }

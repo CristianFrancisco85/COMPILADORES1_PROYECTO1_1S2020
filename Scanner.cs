@@ -220,12 +220,43 @@ namespace OLC1_Proyecto1
                                 ListaTokens.AddLast(TempToken);
                                 break;
                             }
+                            else if ((int)MyChar == 92)
+                            {
+                                MyChar = Entrada.Text[j+1];
+                                switch ((int)MyChar)
+                                {
+                                    case 110:
+                                        TempLexema = TempLexema + Entrada.Text[j] + Entrada.Text[++j];
+                                        break;
+                                    case 39:
+                                        TempLexema = TempLexema + Entrada.Text[j] + Entrada.Text[++j];
+                                        break;
+                                    case 34:
+                                        TempLexema = TempLexema + Entrada.Text[j] + Entrada.Text[++j];
+                                        break;
+                                    case 116:
+                                        TempLexema = TempLexema + Entrada.Text[j] + Entrada.Text[++j];
+                                        break;
+                                    default:
+                                        TempLexema = TempLexema + Entrada.Text[j];
+                                        Errores = true;
+                                        TempToken.setID(ErrorID++);
+                                        TempToken.setLexema(MyChar.ToString());
+                                        TempToken.Fila = Entrada.GetLineFromCharIndex(j) + 1;
+                                        TempToken.Columna = j - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
+                                        ListaErrores.AddLast(TempToken);
+                                        j++;
+                                        break;
+                                }
+                                
+                            }
                             else
                             {
                                 TempLexema = TempLexema + Entrada.Text[j];
                             }
                         }
                     }
+
 
                     //PARA COMENTARIOS MULTILINEA
 
@@ -547,10 +578,14 @@ namespace OLC1_Proyecto1
         {
             TokensTxt.AppendText("<ListaTokens>\n",Color.BlueViolet);
             ErroresTxt.AppendText("<ListaErrores>\n", Color.BlueViolet);
-            foreach (Regex auxRegex in Expresiones)
+            Boolean PalabraControl;
+
+            foreach (Palabra auxPalabra in Palabras)
             {
-                foreach (Palabra auxPalabra in Palabras)
+                PalabraControl = false;
+                foreach (Regex auxRegex in Expresiones)
                 {
+
                     if (auxRegex.TestLexema(auxPalabra.getLexema(), Conjuntos))
                     {
                         //GENERAR XML
@@ -574,28 +609,29 @@ namespace OLC1_Proyecto1
 
                         TokensTxt.AppendText("\t</Token>\n\n", Color.LimeGreen);
 
-                        
+                        PalabraControl = true;
                     }
-                    else
-                    {
-                        //GENERAR XML
-                        ErroresTxt.AppendText("\t<Error>\n", Color.LimeGreen);
+                    
+                }
+                if(!PalabraControl)
+                {
+                    //GENERAR XML
+                    ErroresTxt.AppendText("\t<Error>\n", Color.LimeGreen);
 
-                        ErroresTxt.AppendText("\t\t<Valor> ", Color.DeepPink);
-                        ErroresTxt.AppendText(auxPalabra.getLexema(), Color.Gainsboro);
-                        ErroresTxt.AppendText(" </Valor>\n", Color.DeepPink);
+                    ErroresTxt.AppendText("\t\t<Valor> ", Color.DeepPink);
+                    ErroresTxt.AppendText(auxPalabra.getLexema(), Color.Gainsboro);
+                    ErroresTxt.AppendText(" </Valor>\n", Color.DeepPink);
 
-                        ErroresTxt.AppendText("\t\t<Fila> ", Color.Crimson);
-                        ErroresTxt.AppendText(auxPalabra.Fila.ToString(), Color.Gainsboro);
-                        ErroresTxt.AppendText(" </Fila>\n", Color.Crimson);
+                    ErroresTxt.AppendText("\t\t<Fila> ", Color.Crimson);
+                    ErroresTxt.AppendText(auxPalabra.Fila.ToString(), Color.Gainsboro);
+                    ErroresTxt.AppendText(" </Fila>\n", Color.Crimson);
 
-                        ErroresTxt.AppendText("\t\t<Columa> ", Color.DodgerBlue);
-                        ErroresTxt.AppendText(auxPalabra.Columna.ToString(), Color.Gainsboro);
-                        ErroresTxt.AppendText(" </Columa>\n", Color.DodgerBlue);
+                    ErroresTxt.AppendText("\t\t<Columa> ", Color.DodgerBlue);
+                    ErroresTxt.AppendText(auxPalabra.Columna.ToString(), Color.Gainsboro);
+                    ErroresTxt.AppendText(" </Columa>\n", Color.DodgerBlue);
 
-                        ErroresTxt.AppendText("\t</Error>\n\n", Color.LimeGreen);
+                    ErroresTxt.AppendText("\t</Error>\n\n", Color.LimeGreen);
 
-                    }
                 }
             }
             TokensTxt.AppendText("</ListaTokens>", Color.BlueViolet);

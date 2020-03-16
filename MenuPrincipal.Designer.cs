@@ -33,6 +33,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.textEditorTabPage1 = new Practica1LF_AnalizadorLexico.TextEditorTabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.automataPictureBox = new System.Windows.Forms.PictureBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -48,9 +49,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.textEditorTabPage1 = new Practica1LF_AnalizadorLexico.TextEditorTabPage();
             this.guardarTokens = new System.Windows.Forms.Button();
             this.guardarErrores = new System.Windows.Forms.Button();
+            this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.automataPictureBox)).BeginInit();
@@ -113,6 +114,15 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Pestaña1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // textEditorTabPage1
+            // 
+            this.textEditorTabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.textEditorTabPage1.Location = new System.Drawing.Point(0, 0);
+            this.textEditorTabPage1.Margin = new System.Windows.Forms.Padding(5);
+            this.textEditorTabPage1.Name = "textEditorTabPage1";
+            this.textEditorTabPage1.Size = new System.Drawing.Size(605, 575);
+            this.textEditorTabPage1.TabIndex = 0;
             // 
             // button3
             // 
@@ -260,15 +270,6 @@
             this.label4.TabIndex = 18;
             this.label4.Text = "Tokens";
             // 
-            // textEditorTabPage1
-            // 
-            this.textEditorTabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.textEditorTabPage1.Location = new System.Drawing.Point(0, 0);
-            this.textEditorTabPage1.Margin = new System.Windows.Forms.Padding(5);
-            this.textEditorTabPage1.Name = "textEditorTabPage1";
-            this.textEditorTabPage1.Size = new System.Drawing.Size(605, 575);
-            this.textEditorTabPage1.TabIndex = 0;
-            // 
             // guardarTokens
             // 
             this.guardarTokens.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -280,6 +281,7 @@
             this.guardarTokens.TabIndex = 19;
             this.guardarTokens.Text = "Guardar XML";
             this.guardarTokens.UseVisualStyleBackColor = true;
+            this.guardarTokens.Click += new System.EventHandler(this.GuardarTokens_Click);
             // 
             // guardarErrores
             // 
@@ -292,6 +294,11 @@
             this.guardarErrores.TabIndex = 20;
             this.guardarErrores.Text = "Guardar XML";
             this.guardarErrores.UseVisualStyleBackColor = true;
+            this.guardarErrores.Click += new System.EventHandler(this.GuardarErrores_Click);
+            // 
+            // saveFileDialog2
+            // 
+            this.saveFileDialog2.Filter = "Archivo XML | .xml";
             // 
             // MenuPrincipal
             // 
@@ -357,6 +364,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button guardarTokens;
         private System.Windows.Forms.Button guardarErrores;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog2;
     }
 }
 
