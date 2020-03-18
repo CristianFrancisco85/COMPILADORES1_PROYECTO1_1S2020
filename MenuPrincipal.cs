@@ -192,6 +192,8 @@ namespace OLC1_Proyecto1
 
         private void Button2_Click(object sender, EventArgs e)
         {
+            TokensTxt.Text = "";
+            ErroresTxt.Text = "";
             MainScanner.validarLexemas(TokensTxt,ErroresTxt);
         }
 

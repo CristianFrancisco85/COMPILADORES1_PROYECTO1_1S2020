@@ -225,8 +225,8 @@ namespace OLC1_Proyecto1
                                 MyChar = Entrada.Text[j+1];
                                 switch ((int)MyChar)
                                 {
-                                    case 110:
-                                        TempLexema = TempLexema + Entrada.Text[j] + Entrada.Text[++j];
+                                    case 110:                        
+                                        TempLexema = TempLexema + "\n"; j++;
                                         break;
                                     case 39:
                                         TempLexema = TempLexema + Entrada.Text[j] + Entrada.Text[++j];
@@ -235,7 +235,7 @@ namespace OLC1_Proyecto1
                                         TempLexema = TempLexema + Entrada.Text[j] + Entrada.Text[++j];
                                         break;
                                     case 116:
-                                        TempLexema = TempLexema + Entrada.Text[j] + Entrada.Text[++j];
+                                        TempLexema = TempLexema + "\t"; j++;
                                         break;
                                     default:
                                         TempLexema = TempLexema + Entrada.Text[j];
@@ -257,6 +257,61 @@ namespace OLC1_Proyecto1
                         }
                     }
 
+                    else if ((int)MyChar == 91)
+                    {
+                        i++;
+                        i++;
+                        MyChar = Entrada.Text[i];
+                        for (int j = i; j < NCaracteres; j++)
+                        {
+                            MyChar = Entrada.Text[j];
+                            if ((int)MyChar == 58 && Entrada.Text[j+1]==93)
+                            {
+                                i = j+1;
+                                TempToken.setTipo(Token.TipoToken.CADENA);
+                                TempToken.setLexema(TempLexema);
+                                TempToken.setID(TokenID++);
+                                TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                                TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
+                                ListaTokens.AddLast(TempToken);
+                                break;
+                            }
+                            else if ((int)MyChar == 92)
+                            {
+                                MyChar = Entrada.Text[j + 1];
+                                switch ((int)MyChar)
+                                {
+                                    case 110:
+                                        TempLexema = TempLexema + Environment.NewLine; j++;
+                                        break;
+                                    case 39:
+                                        TempLexema = TempLexema + Entrada.Text[j] + Entrada.Text[++j];
+                                        break;
+                                    case 34:
+                                        TempLexema = TempLexema + Entrada.Text[j] + Entrada.Text[++j];
+                                        break;
+                                    case 116:
+                                        TempLexema = TempLexema + "\t"; j++;
+                                        break;
+                                    default:
+                                        TempLexema = TempLexema + Entrada.Text[j];
+                                        Errores = true;
+                                        TempToken.setID(ErrorID++);
+                                        TempToken.setLexema(MyChar.ToString());
+                                        TempToken.Fila = Entrada.GetLineFromCharIndex(j) + 1;
+                                        TempToken.Columna = j - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
+                                        ListaErrores.AddLast(TempToken);
+                                        j++;
+                                        break;
+                                }
+
+                            }
+                            else
+                            {
+                                TempLexema = TempLexema + Entrada.Text[j];
+                            }
+                        }
+                    }
 
                     //PARA COMENTARIOS MULTILINEA
 
@@ -300,6 +355,14 @@ namespace OLC1_Proyecto1
                         else
                         {
                             //CONTROLAR EXCEPCION DE MAL INICIO DE COMENTARIO
+                            i--;
+                            TempLexema = TempLexema + Entrada.Text[i];
+                            TempToken.setTipo(Token.TipoToken.ID);
+                            TempToken.setLexema(TempLexema);
+                            TempToken.setID(TokenID++);
+                            TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                            TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
+                            ListaTokens.AddLast(TempToken);
                         }
                     }
 
@@ -339,7 +402,18 @@ namespace OLC1_Proyecto1
                         }
                     }
 
-                    else if (MyChar >= 125)
+                    else if (MyChar >= 33 && MyChar<=125)
+                    {
+                        TempLexema = TempLexema + Entrada.Text[i];
+                        TempToken.setTipo(Token.TipoToken.ID);
+                        TempToken.setLexema(TempLexema);
+                        TempToken.setID(TokenID++);
+                        TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                        TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
+                        ListaTokens.AddLast(TempToken);
+                    }
+
+                    else if (MyChar > 125)
                     {
                         Errores = true;
 
