@@ -225,27 +225,14 @@ namespace OLC1_Proyecto1
                                 MyChar = Entrada.Text[j+1];
                                 switch ((int)MyChar)
                                 {
-                                    case 110:                        
-                                        TempLexema = TempLexema + "\n"; j++;
-                                        break;
                                     case 39:
                                         TempLexema = TempLexema + Entrada.Text[j] + Entrada.Text[++j];
                                         break;
                                     case 34:
                                         TempLexema = TempLexema + Entrada.Text[j] + Entrada.Text[++j];
-                                        break;
-                                    case 116:
-                                        TempLexema = TempLexema + "\t"; j++;
-                                        break;
+                                        break; 
                                     default:
                                         TempLexema = TempLexema + Entrada.Text[j];
-                                        Errores = true;
-                                        TempToken.setID(ErrorID++);
-                                        TempToken.setLexema(MyChar.ToString());
-                                        TempToken.Fila = Entrada.GetLineFromCharIndex(j) + 1;
-                                        TempToken.Columna = j - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
-                                        ListaErrores.AddLast(TempToken);
-                                        j++;
                                         break;
                                 }
                                 
@@ -295,13 +282,6 @@ namespace OLC1_Proyecto1
                                         break;
                                     default:
                                         TempLexema = TempLexema + Entrada.Text[j];
-                                        Errores = true;
-                                        TempToken.setID(ErrorID++);
-                                        TempToken.setLexema(MyChar.ToString());
-                                        TempToken.Fila = Entrada.GetLineFromCharIndex(j) + 1;
-                                        TempToken.Columna = j - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
-                                        ListaErrores.AddLast(TempToken);
-                                        j++;
                                         break;
                                 }
 
@@ -398,7 +378,15 @@ namespace OLC1_Proyecto1
                         }
                         else
                         {
-                            //CONTROLAR EXCEPCION DE MA INICIO DE COMENTARIO
+                            //CONTROLAR EXCEPCION DE MAL INICIO DE COMENTARIO
+                            i--;
+                            TempLexema = TempLexema + Entrada.Text[i];
+                            TempToken.setTipo(Token.TipoToken.ID);
+                            TempToken.setLexema(TempLexema);
+                            TempToken.setID(TokenID++);
+                            TempToken.Fila = Entrada.GetLineFromCharIndex(i) + 1;
+                            TempToken.Columna = i - Entrada.GetFirstCharIndexFromLine(TempToken.Fila - 1);
+                            ListaTokens.AddLast(TempToken);
                         }
                     }
 
@@ -651,7 +639,7 @@ namespace OLC1_Proyecto1
         public void validarLexemas(RichTextBox TokensTxt, RichTextBox ErroresTxt)
         {
             TokensTxt.AppendText("<ListaTokens>\n",Color.BlueViolet);
-            ErroresTxt.AppendText("<ListaErrores>\n", Color.BlueViolet);
+            ErroresTxt.AppendText("<ListaErrores>\n\n", Color.BlueViolet);
             Boolean PalabraControl;
 
             foreach (Palabra auxPalabra in Palabras)

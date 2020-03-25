@@ -33,7 +33,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.textEditorTabPage1 = new Practica1LF_AnalizadorLexico.TextEditorTabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.automataPictureBox = new System.Windows.Forms.PictureBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -52,6 +51,7 @@
             this.guardarTokens = new System.Windows.Forms.Button();
             this.guardarErrores = new System.Windows.Forms.Button();
             this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
+            this.textEditorTabPage1 = new Practica1LF_AnalizadorLexico.TextEditorTabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.automataPictureBox)).BeginInit();
@@ -114,15 +114,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Pestaña1";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // textEditorTabPage1
-            // 
-            this.textEditorTabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.textEditorTabPage1.Location = new System.Drawing.Point(0, 0);
-            this.textEditorTabPage1.Margin = new System.Windows.Forms.Padding(5);
-            this.textEditorTabPage1.Name = "textEditorTabPage1";
-            this.textEditorTabPage1.Size = new System.Drawing.Size(605, 575);
-            this.textEditorTabPage1.TabIndex = 0;
             // 
             // button3
             // 
@@ -219,6 +210,7 @@
             this.ErroresTxt.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ErroresTxt.Location = new System.Drawing.Point(1320, 120);
             this.ErroresTxt.Name = "ErroresTxt";
+            this.ErroresTxt.ReadOnly = true;
             this.ErroresTxt.Size = new System.Drawing.Size(452, 288);
             this.ErroresTxt.TabIndex = 13;
             this.ErroresTxt.Text = "";
@@ -230,6 +222,7 @@
             this.TokensTxt.Font = new System.Drawing.Font("Consolas", 9.75F);
             this.TokensTxt.Location = new System.Drawing.Point(1320, 457);
             this.TokensTxt.Name = "TokensTxt";
+            this.TokensTxt.ReadOnly = true;
             this.TokensTxt.Size = new System.Drawing.Size(452, 288);
             this.TokensTxt.TabIndex = 14;
             this.TokensTxt.Text = "";
@@ -299,6 +292,15 @@
             // saveFileDialog2
             // 
             this.saveFileDialog2.Filter = "Archivo XML | .xml";
+            // 
+            // textEditorTabPage1
+            // 
+            this.textEditorTabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.textEditorTabPage1.Location = new System.Drawing.Point(0, 0);
+            this.textEditorTabPage1.Margin = new System.Windows.Forms.Padding(5);
+            this.textEditorTabPage1.Name = "textEditorTabPage1";
+            this.textEditorTabPage1.Size = new System.Drawing.Size(605, 575);
+            this.textEditorTabPage1.TabIndex = 0;
             // 
             // MenuPrincipal
             // 
